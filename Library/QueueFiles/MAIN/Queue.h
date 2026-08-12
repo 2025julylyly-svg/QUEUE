@@ -66,8 +66,8 @@ public:
         this->Capacity = other.Capacity;
         this->queue = new value[Capacity];
         std::size_t index = 0;
-        for (value* it = &other.Front(); it <= &other.Back(); ++it) {
-            *(queue + index++) = *it;
+        for (int i = 0; i < ElementNumber; ++i) {
+            *(queue + i) = *(other.queue + i);
         }
         AuxiliaryQueue = queue;
     }
@@ -76,17 +76,14 @@ public:
     explicit Queue(Queue&& other) noexcept {
         this->ElementNumber = other.ElementNumber;
         this->Capacity = other.Capacity;
-        this->queue = new value[Capacity];
-        std::size_t index = 0;
-        for (value* it = &other.Front(); it <= &other.Back(); ++it) {
-            *(queue + index++) = *it;
-        }
-        AuxiliaryQueue = queue;
+        this->queue = other.queue;
+        this->AuxiliaryQueue = other.AuxiliaryQueue;
 
         other.ElementNumber = 0;
         other.Capacity = 0;
         delete[] other.queue;
         other.queue = nullptr;
+        other.AuxiliaryQueue = nullptr;
     }
 
     ///////////////
