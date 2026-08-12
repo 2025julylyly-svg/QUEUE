@@ -1,5 +1,4 @@
 #pragma once
-#include <exception>
 #include <stdexcept>
 class EmptyQueueError : public std::logic_error
 {

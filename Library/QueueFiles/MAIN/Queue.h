@@ -38,12 +38,49 @@ public:
     }
 
     // init constructor
-    explicit Queue(const std::initializer_list<value>&& init) {}
-    explicit Queue(const std::initializer_list<value>&);
+    explicit Queue(const std::initializer_list<value>&& init) {
+        this->ElementNumber = init.size();
+        this->Capacity = ElementNumber * 2;
+        this->queue = new value[Capacity];
+        int index = 0;
+        for (const value& elem : init) {
+            *(queue + index) = elem;
+        }
+    }
+    explicit Queue(const std::initializer_list<value>& init) {
+        this->ElementNumber = init.size();
+        this->Capacity = ElementNumber * 2;
+        this->queue = new value[Capacity];
+        std::size_t index = 0;
+        for (const value& elem : init) {
+            *(queue + index++) = elem;
+        }
+    }
     // copy constructor
-    explicit Queue(const Queue&);
+    explicit Queue(const Queue& other) {
+        this->ElementNumber = other.ElementNumber;
+        this->Capacity = other.Capacity;
+        this->queue = new value[Capacity];
+        std::size_t index = 0;
+        for (value it = other.Front(); it <= other.Back(); ++it) {
+            *(queue + index++) = it;
+        }
+    }
     // move constructor
-    explicit Queue(Queue&&);
+    explicit Queue(Queue&& other)  noexcept {
+        this->ElementNumber = other.ElementNumber;
+        this->Capacity = other.Capacity;
+        this->queue = new value[Capacity];
+        std::size_t index = 0;
+        for (value it = other.Front(); it <= other.Back(); ++it) {
+            *(queue + index++) = it;
+        }
+
+        other.ElementNumber = 0;
+        other.Capacity = 0;
+        delete[] other.queue;
+        other.queue = nullptr;
+    }
     ///////////////
     // functions //
     ///////////////
