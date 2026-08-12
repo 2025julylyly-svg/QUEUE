@@ -149,6 +149,21 @@ public:
             std::cout << std::endl;
         }
     }
+    Queue& operator= (const Queue& other) {
+        if (this == &other) {
+            return *this;
+        }
+        delete[] this->queue;
+        this->Capacity = other.Capacity;
+        this->ElementNumber = other.ElementNumber;
+        this->queue = new value[Capacity];
+        std::size_t index = 0;
+        for (value* it = &other.Front(); it <= &other.Back(); ++it) {
+            *(queue + index++) = *it;
+        }
+        AuxiliaryQueue = queue;
+        return *this;
+    }
     ~Queue() {
         delete[] queue;
     }
