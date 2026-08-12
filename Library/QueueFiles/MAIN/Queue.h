@@ -47,6 +47,7 @@ public:
             *(queue + index++) = elem;
         }
     }
+
     explicit Queue(const std::initializer_list<value>& init) {
         this->ElementNumber = init.size();
         this->Capacity = ElementNumber == 0 ? 2 : ElementNumber * 2;
@@ -56,6 +57,7 @@ public:
             *(queue + index++) = elem;
         }
     }
+
     // copy constructor
     explicit Queue(const Queue& other) {
         this->ElementNumber = other.ElementNumber;
@@ -66,8 +68,9 @@ public:
             *(queue + index++) = *it;
         }
     }
+
     // move constructor
-    explicit Queue(Queue&& other)  noexcept {
+    explicit Queue(Queue&& other) noexcept {
         this->ElementNumber = other.ElementNumber;
         this->Capacity = other.Capacity;
         this->queue = new value[Capacity];
@@ -81,6 +84,7 @@ public:
         delete[] other.queue;
         other.queue = nullptr;
     }
+
     ///////////////
     // functions //
     ///////////////
@@ -118,21 +122,19 @@ public:
     void Remove() {
         try {
             if (this->IsEmpty()) {
-                throw EmptyQueueError("queue is empty");
+                throw EmptyQueueError( "queue is empty" );
             }
-            pointer AuxiliaryQueue = new value[Capacity];
+            auto AuxiliaryQueue = new value[Capacity];
             for (std::size_t i = 1; i < ElementNumber; ++i) {
                 AuxiliaryQueue[i - 1] = queue[i];
             }
+            --ElementNumber;
             delete[] queue;
             queue = AuxiliaryQueue;
-            --ElementNumber;
-        }
-        catch (const EmptyQueueError& e) {
+        } catch (const EmptyQueueError& e) {
             std::cerr << "Error: " << e.what();
             std::cout << std::endl;
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
             std::cerr << "Error: " << e.what();
             std::cout << std::endl;
         }
