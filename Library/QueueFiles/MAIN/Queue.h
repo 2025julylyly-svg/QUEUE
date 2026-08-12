@@ -1,8 +1,6 @@
 #pragma once
 #include <initializer_list>
 #include <iostream>
-#include <ostream>
-
 #include "../Errors/IsEmptyQueueError.h"
 
 template<typename value>
@@ -15,13 +13,14 @@ private:
 
 private: // elements
     pointer queue;
+    pointer AuxiliaryQueue;
     std::size_t ElementNumber;
     std::size_t Capacity;
 
 private: // functions
     void Resize() {
         Capacity *= 2;
-        auto AuxiliaryQueue = new value[Capacity];
+        AuxiliaryQueue = new value[Capacity];
         for (std::size_t i = 0; i < ElementNumber; ++i) {
             *(AuxiliaryQueue + i) = *(queue + i);
         }
@@ -35,6 +34,7 @@ public:
         ElementNumber = 0;
         Capacity = 2;
         queue = new value[Capacity];
+        AuxiliaryQueue = queue;
     }
 
     // init constructor
@@ -46,6 +46,7 @@ public:
         for (const value& elem : init) {
             *(queue + index++) = elem;
         }
+        AuxiliaryQueue = queue;
     }
 
     explicit Queue(const std::initializer_list<value>& init) {
@@ -56,6 +57,7 @@ public:
         for (const value& elem : init) {
             *(queue + index++) = elem;
         }
+        AuxiliaryQueue = queue;
     }
 
     // copy constructor
@@ -67,6 +69,7 @@ public:
         for (value* it = &other.Front(); it <= &other.Back(); ++it) {
             *(queue + index++) = *it;
         }
+        AuxiliaryQueue = queue;
     }
 
     // move constructor
@@ -78,6 +81,7 @@ public:
         for (value* it = &other.Front(); it <= &other.Back(); ++it) {
             *(queue + index++) = *it;
         }
+        AuxiliaryQueue = queue;
 
         other.ElementNumber = 0;
         other.Capacity = 0;
@@ -124,7 +128,7 @@ public:
             if (this->IsEmpty()) {
                 throw EmptyQueueError( "queue is empty" );
             }
-            auto AuxiliaryQueue = new value[Capacity];
+            AuxiliaryQueue = new value[Capacity];
             for (std::size_t i = 1; i < ElementNumber; ++i) {
                 AuxiliaryQueue[i - 1] = queue[i];
             }
