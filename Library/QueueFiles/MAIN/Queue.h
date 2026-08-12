@@ -116,7 +116,13 @@ public:
         return ElementNumber == Capacity;
     }
 
-    void Add(value elem) {
+    void Add(value& elem) {
+        if (this->IsFull()) {
+            this->Resize();
+        }
+        this->queue[ElementNumber++] = elem;
+    }
+    void Add(value&& elem) {
         if (this->IsFull()) {
             this->Resize();
         }
