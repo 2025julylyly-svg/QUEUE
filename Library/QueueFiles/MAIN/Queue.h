@@ -1,5 +1,9 @@
 #pragma once
 #include <initializer_list>
+#include <iostream>
+#include <ostream>
+
+#include "../Errors/IsEmptyQueueError.h"
 
 template<typename value>
 class Queue
@@ -17,7 +21,7 @@ private: // elements
 private: // functions
     void Resize() {
         Capacity *= 2;
-        pointer AuxiliaryQueue = new value[Capacity];
+        auto AuxiliaryQueue = new value[Capacity];
         for (std::size_t i = 0; i < ElementNumber; ++i) {
             *(AuxiliaryQueue + i) = *(queue + i);
         }
@@ -74,5 +78,25 @@ public:
         this->queue[ElementNumber++] = elem;
     }
 
-    void Remove() {}
+    void Remove() {
+        try {
+            if (this->IsEmpty()) {
+                throw EmptyQueueError("queue is empty");
+            }
+            auto AuxiliaryQueue = new value[Capacity];
+            for (std::size_t i = 1; i < ElementNumber; ++i) {
+                *(AuxiliaryQueue + (i - 1)) = *(queue + i);
+            }
+            delete[] queue;
+            queue = AuxiliaryQueue;
+        }
+        catch (const EmptyQueueError& e) {
+            std::cerr << "Error: " << e.what();
+            std::cout << std::endl;
+        }
+        catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what();
+            std::cout << std::endl;
+        }
+    }
 };
