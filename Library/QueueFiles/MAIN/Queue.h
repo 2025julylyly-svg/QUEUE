@@ -40,16 +40,16 @@ public:
     // init constructor
     explicit Queue(const std::initializer_list<value>&& init) {
         this->ElementNumber = init.size();
-        this->Capacity = ElementNumber * 2;
+        this->Capacity = ElementNumber == 0 ? 2 : ElementNumber * 2;
         this->queue = new value[Capacity];
         int index = 0;
         for (const value& elem : init) {
-            *(queue + index) = elem;
+            *(queue + index++) = elem;
         }
     }
     explicit Queue(const std::initializer_list<value>& init) {
         this->ElementNumber = init.size();
-        this->Capacity = ElementNumber * 2;
+        this->Capacity = ElementNumber == 0 ? 2 : ElementNumber * 2;
         this->queue = new value[Capacity];
         std::size_t index = 0;
         for (const value& elem : init) {
@@ -122,10 +122,11 @@ public:
             }
             auto AuxiliaryQueue = new value[Capacity];
             for (std::size_t i = 1; i < ElementNumber; ++i) {
-                *(AuxiliaryQueue + (i - 1)) = *(queue + i);
+                AuxiliaryQueue[i - 1] = queue[i];
             }
             delete[] queue;
             queue = AuxiliaryQueue;
+            --ElementNumber;
         }
         catch (const EmptyQueueError& e) {
             std::cerr << "Error: " << e.what();
