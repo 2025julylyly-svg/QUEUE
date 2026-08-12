@@ -65,7 +65,6 @@ public:
         this->ElementNumber = other.ElementNumber;
         this->Capacity = other.Capacity;
         this->queue = new value[Capacity];
-        std::size_t index = 0;
         for (int i = 0; i < ElementNumber; ++i) {
             *(queue + i) = *(other.queue + i);
         }
