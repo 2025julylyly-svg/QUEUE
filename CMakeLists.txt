@@ -4,5 +4,7 @@ project(QUEUE)
 set(CMAKE_CXX_STANDARD 26)
 
 add_executable(QUEUE main.cpp
-        Library/QueueFiles/Queue.h
+        Library/QueueFiles/MAIN/Queue.h
+        Library/QueueFiles/Errors/IsEmptyQueueError.h
+        Library/QueueFiles/Errors/IsEmptyQueueError.cpp
 )
