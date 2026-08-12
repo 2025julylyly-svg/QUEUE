@@ -62,7 +62,7 @@ public:
         this->Capacity = other.Capacity;
         this->queue = new value[Capacity];
         std::size_t index = 0;
-        for (value it = other.Front(); it <= other.Back(); ++it) {
+        for (value* it = &other.Front(); it <= &other.Back(); ++it) {
             *(queue + index++) = it;
         }
     }
@@ -72,8 +72,8 @@ public:
         this->Capacity = other.Capacity;
         this->queue = new value[Capacity];
         std::size_t index = 0;
-        for (value it = other.Front(); it <= other.Back(); ++it) {
-            *(queue + index++) = it;
+        for (value* it = &other.Front(); it <= &other.Back(); ++it) {
+            *(queue + index++) = *it;
         }
 
         other.ElementNumber = 0;
