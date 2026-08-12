@@ -4,7 +4,7 @@
 #include "../Errors/IsEmptyQueueError.h"
 
 template<typename value>
-class Queue
+class Queue final
 {
 private:
     using pointer = value*;
