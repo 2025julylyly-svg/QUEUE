@@ -7,8 +7,5 @@ int main() {
         q.Add( i + 1 );
     }
     q.Remove();
-    for (int it = q.Front(); it <= q.Back(); ++it) {
-        std::cout << it << std::endl;
-    }
     return 0;
 }
