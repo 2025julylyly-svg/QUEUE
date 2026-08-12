@@ -154,7 +154,7 @@ public:
         this->Capacity = other.Capacity;
         this->ElementNumber = other.ElementNumber;
         this->queue = new value[Capacity];
-        for (std::size_t i = 1; i < ElementNumber; ++i) {
+        for (std::size_t i = 0; i < ElementNumber; ++i) {
             *(queue + i) = *(other.queue + i);
         }
         AuxiliaryQueue = queue;
