@@ -63,7 +63,7 @@ public:
         this->queue = new value[Capacity];
         std::size_t index = 0;
         for (value* it = &other.Front(); it <= &other.Back(); ++it) {
-            *(queue + index++) = it;
+            *(queue + index++) = *it;
         }
     }
     // move constructor
