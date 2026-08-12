@@ -143,4 +143,7 @@ public:
             std::cout << std::endl;
         }
     }
+    ~Queue() {
+        delete[] queue;
+    }
 };
